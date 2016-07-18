@@ -1,19 +1,25 @@
 (ns p-p-p-pokerface)
 
 (defn rank [card]
-  nil)
+  (let [[rank _] card
+        high-ranks {\T 10, \J 11, \Q 12, \K 13, \A 14}]
+    (if (Character/isDigit rank) (Integer/valueOf (str rank)) (high-ranks rank))))
 
 (defn suit [card]
-  nil)
+  (let [[_ suit] card]
+    (str suit)))
+
+(defn repeats [hand]
+  (frequencies (vals (frequencies (map rank hand)))))
 
 (defn pair? [hand]
-  nil)
+  (= ((repeats hand) 2) 1))
 
 (defn three-of-a-kind? [hand]
-  nil)
+  (= ((repeats hand) 3) 1))
 
 (defn four-of-a-kind? [hand]
-  nil)
+  (= ((repeats hand) 4) 1))
 
 (defn flush? [hand]
   nil)
@@ -22,7 +28,7 @@
   nil)
 
 (defn two-pairs? [hand]
-  nil)
+  (= ((repeats hand) 2) 2))
 
 (defn straight? [hand]
   nil)
